@@ -1,18 +1,26 @@
 package wechat_bot
 
-import "testing"
+import (
+	"fmt"
+	"log"
+	"testing"
+)
 
 func TestSendMsg(t *testing.T) {
 	url := "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=bb18509f-2324-47dc-8672-64736b11ab8f"
 
+	baseUrl := "http://cdbot_be.hz-xuelang.xyz/"
+	app := "test_deploy"
+	env := "daily"
+	dockerImage := "git.5c82513824cab00ef17467c4b6fd95375cdd87bb"
+
 	msgContent := MsgContent{
 		Msgtype: "markdown",
 		Markdown: Markdown{
-			Content: `实时新增用户反馈<font color="warning">132例</font>，请相关同事注意。
-			>类型:<font color="comment">用户反馈</font>
-			>普通用户反馈:<font color="comment">117例</font>
-			>VIP用户反馈:<font color="comment">15例</font>`,
+			Content: fmt.Sprintf("[发布测试环境](%s/deploy?app=%s&env=%s&dockerImage=%s)", baseUrl, app, env, dockerImage),
+			// Content: "http://cdbot-be.hz-xuelang.xyz/deploy?app=test_deploy&env=daily&dockerImage=git.5c82513824cab00ef17467c4b6fd95375cdd87bb",
 		},
 	}
+	log.Println(fmt.Sprintf("%s/deploy?app=%s&env=%s&dockerImage=%s", baseUrl, app, env, dockerImage))
 	SendMsg(url, msgContent)
 }
