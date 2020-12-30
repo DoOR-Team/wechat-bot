@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 	"strings"
+
+	"github.com/DoOR-Team/goutils/log"
 )
 
 type Markdown struct {
@@ -16,11 +18,17 @@ type MsgContent struct {
 }
 
 func SendMsg(url string, content MsgContent) error {
+
+	if url == "" {
+		log.Error("未找到url，跳过提醒")
+		return nil
+	}
+
 	contentJson, _ := json.Marshal(content)
 	body := strings.NewReader(string(contentJson))
 	req, err := http.NewRequest("POST", url, body)
 	if err != nil {
-		// handle err
+		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
 
