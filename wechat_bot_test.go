@@ -7,7 +7,8 @@ import (
 )
 
 func TestSendMsg(t *testing.T) {
-	url := "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=bb18509f-2324-47dc-8672-64736b11ab8f"
+	// url := "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=bb18509f-2324-47dc-8672-64736b11ab8f"
+	url := ""
 
 	baseUrl := "http://cdbot_be.hz-xuelang.xyz/"
 	app := "test_deploy"
@@ -22,5 +23,6 @@ func TestSendMsg(t *testing.T) {
 		},
 	}
 	log.Println(fmt.Sprintf("%s/deploy?app=%s&env=%s&dockerImage=%s", baseUrl, app, env, dockerImage))
-	SendMsg(url, msgContent)
+	err := SendMsg(url, msgContent)
+	log.Println(err)
 }
